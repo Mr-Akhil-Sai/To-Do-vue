@@ -7,24 +7,31 @@
     </div>
     <table class="table table-bordered mt-5">  
   <thead>
-    <tr>
+    <tr class="text-center">
       <th scope="col">Task</th>
-      <th scope="col">Status</th>
-      <th scope="col">Edit</th>
-      <th scope="col">Delete</th>
+      <th scope="col" class="operationsWidth">Status</th>
+      <th scope="col" class="operationsWidth">Edit</th>
+      <th scope="col" class="operationsWidth">Delete</th>
     </tr>
   </thead>
   <tbody>
     <tr v-for="(task,index) in tasks" :key="index">
-      <td ><span>{{ task.name }}</span></td>
-      <td>{{task.status}}</td>
+      <td class="h4" :style="[!task.status? {  textDecoration : 'line-through'}: {}]"><span>{{ task.name }}</span></td>
+      <td class="text-center">
+        <div @click="taskStatus(index)" v-if="task.status" class="text-success h4">
+          <span class="far fa-check-circle" style="cursor: pointer"></span>
+        </div>
+        <div @click="taskStatus(index)" v-else class="text-danger h4">
+          <span class="fas fa-times-circle" style="cursor: pointer"></span>
+        </div>
+      </td>
       <td>
-        <div class="text-center" @click="editTask(index)"> 
-          <span class="fa fa-pen"></span>
+        <div class="text-center h4" @click="editTask(index)"> 
+          <span class="fa fa-pen" style="cursor: pointer"></span>
         </div>
         </td>
-      <td><div class="text-center" @click="deleteTask(index)"> 
-          <span class="fa fa-trash"></span>
+      <td><div class="text-center h4" @click="deleteTask(index)"> 
+          <span class="fa fa-trash" style="cursor: pointer"></span>
         </div>
         </td>
     </tr>
@@ -52,7 +59,7 @@ export default {
       if(this.editedTask === null ){
         this.tasks.push({
           name: this.task,
-          status: "To-Do"
+          status: true
         })
       }
       else{
@@ -67,8 +74,29 @@ export default {
     editTask(index){
       this.task = this.tasks[index].name
       this.editedTask = index
-    }
+    },
+    taskStatus(index){
+      console.log(this.tasks[index].status);
+      if(this.tasks[index].status){
+        this.tasks[index].status = false
+      }
+      else{
+        this.tasks[index].status = true
+      }
+    },
+ 
   }
 }
 </script>
+
+<style scoped>
+  .operationsWidth{
+    width: 150px
+  }
+@media (max-width: 576px) {
+  .operationsWidth{
+    width: 10px;
+  }
+}
+</style>
 

@@ -2,7 +2,7 @@
   <div class="container">
     <h2 class="h2 text-center mt-5">To Do</h2>
     <div class="d-flex">
-      <input type="text" v-model="task" name="task" id="task" class="form-control rounded-0">
+      <input type="text" v-model="task" name="task" placeholder="Enter a Task" ref="taskInput" id="task" class="form-control rounded-0">
       <button @click="submitTask" class="btn btn-warning rounded-0">Submit</button>
     </div>
     <table class="table table-bordered mt-5">  
@@ -74,9 +74,9 @@ export default {
     editTask(index){
       this.task = this.tasks[index].name
       this.editedTask = index
+      this.$refs.taskInput.focus()
     },
     taskStatus(index){
-      console.log(this.tasks[index].status);
       if(this.tasks[index].status){
         this.tasks[index].status = false
       }
